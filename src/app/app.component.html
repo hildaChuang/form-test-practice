@@ -23,7 +23,44 @@
 <!-- Content -->
 <div class="content" role="main">
 
+  <form #form="ngForm" (ngSubmit)="onLogin()">
 
+    <p class="form-field">
+      <label for="account">Email：</label>
+      <input type="email"
+             name="account"
+             id="account"
+             required
+             pattern="\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b"
+             #accountNgModel="ngModel"
+             [ngModel]="account"
+             (ngModelChange)="onChangeAccount(accountNgModel.value, accountNgModel.errors)"
+      >
+      <span class="error-message">{{ accountErrorMsg }}</span>
+    </p>
+
+    <p class="form-field">
+      <label for="password">Password：</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        required
+        #passwordNgModel="ngModel"
+        [ngModel]="password"
+        (ngModelChange)="onChangePassword(passwordNgModel.value, passwordNgModel.errors)"
+      >
+      <span class="error-message">{{ passwordErrorMsg }}</span>
+    </p>
+
+    <p class="form-field">
+      <button type="submit" [disabled]="form.invalid">Login</button>
+    </p>
+
+  </form>
+
+  <hr>
+  <hr>
 
   <ng-container>
     <!-- Next Steps -->
