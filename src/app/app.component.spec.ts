@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /**
  * 測試集合 (Test suite)；作用域 (Scoping)
@@ -7,6 +8,7 @@ import { AppComponent } from './app.component';
  * @param 2 test case
  */
 describe('AppComponent', () => {
+  let component: AppComponent;
   /**
    * beforeAll - 在執行 所有 測試案例之前，會先執行這裡面的程式碼。
    * beforeEach - 在執行 每一個 測試案例之前，會先執行這裡面的程式碼。
@@ -18,6 +20,10 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+      ]
     }).compileComponents();
   });
 
@@ -28,20 +34,8 @@ describe('AppComponent', () => {
    */
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    component = fixture.componentInstance;
+    expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'form-test-practice'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('form-test-practice');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('form-test-practice app is running!');
-  });
 });
