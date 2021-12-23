@@ -23,7 +23,31 @@
 <!-- Content -->
 <div class="content" role="main">
 
+  <form [formGroup]="form" (ngSubmit)="onLogin()">
 
+    <p class="form-field">
+      <label for="account">Email：</label>
+      <input type="email"
+             id="account"
+             [formControl]="accountCtrl"
+      >
+      <span class="error-message">{{ getErrorMsg(accountCtrl) }}</span>
+    </p>
+
+    <p class="form-field">
+      <label for="password">Password：</label>
+      <input type="password"
+             id="password"
+             [formControl]="passwordCtrl"
+      >
+      <span class="error-message">{{ getErrorMsg(passwordCtrl) }}</span>
+    </p>
+
+    <p class="form-field">
+      <button type="submit" [disabled]="form.invalid">Login</button>
+    </p>
+
+  </form>
 
   <ng-container>
     <!-- Next Steps -->
