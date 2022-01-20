@@ -162,4 +162,130 @@ describe('AppComponent', () => {
     });
   });
 
+  describe('Integration test', () => {
+    let compiledElement: HTMLElement;
+
+    beforeEach(() => {
+      // 讓 Angular 將畫面進行渲染
+      fixture.detectChanges();
+      // 取得渲染後的元素
+      compiledElement = fixture.nativeElement;
+    });
+
+    describe('account input field', () => {
+      let accountInputElement: HTMLInputElement;
+
+      beforeEach(() => {
+        accountInputElement = compiledElement.querySelector('#account');
+      });
+
+      it('should have attribute "type", and the value is "email"', () => {
+        const attrName = 'type';
+        const attrValue = 'email';
+
+        expect(accountInputElement.getAttribute(attrName)).toBe(attrValue);
+      });
+
+      it('should binding with formControl "accountCtrl"', () => {
+        const account = 'anything';
+
+        component.accountCtrl.patchValue(account);
+        fixture.detectChanges();
+
+        expect(accountInputElement.value).toBe(account);
+      });
+    });
+
+    describe('password input field', () => {
+      let passwordElement: HTMLInputElement;
+
+      beforeEach(() => {
+        passwordElement = compiledElement.querySelector('#password');
+      });
+
+      it('should have attribute "type", and the value is "password"', () => {
+        const attrName = 'type';
+        const attrValue = 'password';
+
+        expect(passwordElement.getAttribute(attrName)).toBe(attrValue);
+      });
+
+      it('should binding with formControl "passwordCtrl"', () => {
+        const password = '123456789';
+
+        component.passwordCtrl.patchValue(password);
+        fixture.detectChanges();
+
+        expect(passwordElement.value).toBe(password);
+      });
+    });
+
+    describe('error message', () => {
+      it('should binding error message "REQUIRED!" whit the error of "accountCtrl"', () => {
+        const account = '';
+        const expectMsg = 'REQUIRED!';
+        const targetElement = compiledElement.querySelector('#account + .error-message');
+
+        component.accountCtrl.setValue(account);
+        component.accountCtrl.markAsDirty();
+        fixture.detectChanges();
+
+        expect(targetElement?.textContent).toBe(expectMsg);
+      });
+
+      it('should binding error message "Password length must greater then 8" with the error of "passwordCtrl"', () => {
+        const password = '1234';
+        const expectMsg = 'Password length must greater then 8';
+        const targetElement = compiledElement.querySelector('#password + .error-message');
+
+        component.passwordCtrl.setValue(password);
+        component.passwordCtrl.markAsDirty();
+        fixture.detectChanges();
+
+        expect(targetElement?.textContent).toBe(expectMsg);
+      });
+    });
+
+    describe('Login button', () => {
+      let buttonElement: HTMLButtonElement;
+      beforeEach(() => {
+        buttonElement = compiledElement.querySelector('button');
+      });
+
+      it('should have attribute "type", and the value is "submit"', () => {
+        const attrName = 'type';
+        const attrValue = 'submit';
+
+        expect(buttonElement.getAttribute(attrName)).toBe(attrValue);
+      });
+
+      it('should have attribute "disabled" when form status is invalid', () => {
+        const attrName = 'disabled';
+
+        expect(buttonElement.hasAttribute(attrName)).toBeTrue();
+      });
+
+      describe('form status is valid', () => {
+        beforeEach(() => {
+          component.accountCtrl.setValue('abc@example.com');
+          component.passwordCtrl.setValue('1234asdf');
+          fixture.detectChanges();
+        });
+
+        it('should not have attribute "disabled" when form status is valid', () => {
+          const attrName = 'disabled';
+
+          expect(buttonElement.hasAttribute(attrName)).toBeFalsy();
+        });
+
+        it('should trigger function "onLogin" after click button', () => {
+          spyOn(component, 'onLogin');
+          buttonElement.click();
+          expect(component.onLogin).toHaveBeenCalled();
+        });
+      });
+
+    });
+  });
+
 });
