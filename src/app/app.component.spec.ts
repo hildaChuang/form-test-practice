@@ -302,6 +302,49 @@ describe('AppComponent', () => {
         expect(targetElement?.textContent).toBe(errorMsg);
       });
     });
+
+    describe('Login button', () => {
+      let loginBtnElement: HTMLButtonElement;
+
+      beforeEach(() => {
+        loginBtnElement = compiledComponent.querySelector('button');
+      });
+
+      it('should have attribute "type", the value is "submit"', () => {
+        const attrName = 'type';
+        const attrValue = 'submit';
+        expect(loginBtnElement.getAttribute(attrName)).toBe(attrValue);
+      });
+
+      xit('should have attribute "disabled" when the form value status is invalid', () => {
+        const attrName = 'disabled';
+        expect(loginBtnElement.hasAttribute(attrName)).toBeTrue();
+        // expect(loginBtnElement.getAttribute(attrName)).toBeTrue();
+      });
+
+      describe('When the form status is valid', () => {
+        beforeEach(() => {
+          component.account = 'abcd@example.com';
+          component.password = 'abcd1234';
+          fixture.detectChanges();
+        });
+
+        it('should not have attribute "disabled"', () => {
+          const attrName = 'disabled';
+          expect(loginBtnElement.hasAttribute(attrName)).toBeFalse();
+        });
+
+        it('should trigger function "onLogin"', () => {
+          // Arrange
+          spyOn(component, 'onLogin');
+          // Action
+          loginBtnElement.click();
+          // Assert
+          expect(component.onLogin).toHaveBeenCalled();
+        });
+      });
+
+    });
   });
 
 });
