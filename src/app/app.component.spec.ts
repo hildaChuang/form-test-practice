@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 
@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
  */
 describe('AppComponent', () => {
   let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
 
   /**
    * beforeAll - 在執行 所有 測試案例之前，會先執行這裡面的程式碼。
@@ -28,6 +29,9 @@ describe('AppComponent', () => {
       ]
       // compileComponents 實際執行
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
   });
 
   /**
@@ -36,8 +40,6 @@ describe('AppComponent', () => {
    * @param 2 execute test case code
    */
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 
