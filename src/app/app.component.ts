@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   }
 
   constructor(
-    private formBouilder: FormBuilder,
+    private formBuilder: FormBuilder,
   ) {
     this.initForm();
   }
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.form = this.formBouilder.group({
+    this.form = this.formBuilder.group({
       account: [
         null,
         [
