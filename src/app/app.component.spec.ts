@@ -216,6 +216,66 @@ describe('AppComponent', () => {
       });
 
     });
+
+    describe('Password input field', () => {
+      let passwordInputElement: HTMLInputElement;
+
+      beforeEach(() => {
+        passwordInputElement = compiledComponent.querySelector('#password');
+      });
+
+      it('should have attribute "type", and the value is "password"', () => {
+        const attrName = 'type';
+        const attrValue = 'password';
+        expect(passwordInputElement.getAttribute(attrName)).toBe(attrValue);
+      });
+
+      it('should have attribute "name", and the value is "password"', () => {
+        const attrName = 'name';
+        const attrValue = 'password';
+        expect(passwordInputElement.getAttribute(attrName)).toBe(attrValue);
+      });
+
+      it('should have attribute "required"', () => {
+        const attrName = 'required';
+        expect(passwordInputElement.hasAttribute(attrName)).toBeTrue();
+      });
+
+      it('should have attribute "maxlength", and the value is "16"', () => {
+        const attrName = 'maxlength';
+        const attrValue = '16';
+        expect(passwordInputElement.getAttribute(attrName)).toBe(attrValue);
+      });
+
+      it('should have attribute "minlength", and the value is "8"', () => {
+        const attrName = 'minlength';
+        const attrValue = '8';
+        expect(passwordInputElement.getAttribute(attrName)).toBe(attrValue);
+      });
+
+      it('should binding the value of property "password"', () => {
+        const password = 'abcd1234';
+        // 在 component 帶入初始值
+        component.password = password;
+        // 模擬偵測到資料變動
+        fixture.detectChanges();
+
+        expect(passwordInputElement.getAttribute('ng-reflect-model')).toBe(password);
+      });
+
+      it('should trigger function "", and the value is "onChangePassword" when the value changed', () => {
+        spyOn(component, 'onChangePassword');
+        const passwordNgModel = component.passwordNgModelRef;
+        // 相當於使用者輸入的動作
+        passwordInputElement.value = 'abcd1234';
+        // 使用者輸入後觸發 ngModelChange
+        passwordInputElement.dispatchEvent(new Event('ngModelChange'));
+
+        // component 的 onChangePassword 有被觸發，並且包含參數
+        expect(component.onChangePassword).toHaveBeenCalledWith(passwordNgModel.value, passwordNgModel.errors);
+      });
+
+    });
   });
 
 });

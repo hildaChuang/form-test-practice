@@ -8,6 +8,7 @@ import { NgModel, ValidationErrors } from '@angular/forms';
 })
 export class AppComponent {
   @ViewChild('accountNgModel') accountNgModelRef: NgModel;
+  @ViewChild('passwordNgModel') passwordNgModelRef: NgModel;
 
   title = 'form-test-practice';
 

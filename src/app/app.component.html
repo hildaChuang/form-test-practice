@@ -45,6 +45,8 @@
              name="password"
              id="password"
              required
+             maxlength="16"
+             minlength="8"
              #passwordNgModel="ngModel"
              [ngModel]="password"
              (ngModelChange)="onChangePassword(passwordNgModel.value, passwordNgModel.errors)"
