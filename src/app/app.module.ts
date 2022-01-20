@@ -3,10 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { DynamicFormByNgFormComponent } from './components/dynamic-form-by-ng-form/dynamic-form-by-ng-form.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DynamicFormByNgFormComponent
   ],
   imports: [
     BrowserModule,
