@@ -41,108 +41,114 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('onChangeAccount', () => {
+  describe('Unit testing', () => {
 
-    it('should set account value', () => {
-      // Arrange
-      const account = 'test@example.com';
-      const errors = null;
-      // Act
-      component.onChangeAccount(account, errors);
-      // Assert
-      expect(component.account).toBe(account);
+    describe('onChangeAccount', () => {
+
+      it('should set account value', () => {
+        // Arrange
+        const account = 'test@example.com';
+        const errors = null;
+        // Act
+        component.onChangeAccount(account, errors);
+        // Assert
+        expect(component.account).toBe(account);
+      });
+
+      it('should set the required error message into "accountErrorMsg" when account value is empty', () => {
+        // Arrange
+        const account = null;
+        const errors = {required: true};
+        const errorMsg = 'REQUIRED!';
+        // Act
+        component.onChangeAccount(account, errors);
+        // Assert
+        expect(component.accountErrorMsg).toBe(errorMsg);
+      });
+
+      it('should set the pattern error message into "accountErrorMsg" when account pattern is not correct', () => {
+        // Arrange
+        const account = 'test123';
+        const errors = {
+          pattern: {
+            actualValue: 'test123',
+            requiredPattern: '\\b[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,4}\\b',
+          },
+        };
+        const errorMsg = 'Pattern Error';
+        // Act
+        component.onChangeAccount(account, errors);
+        // Assert
+        expect(component.accountErrorMsg).toBe(errorMsg);
+      });
+
+      it('should set empty string error message into "accountErrorMsg" when account is correct', () => {
+        // Arrange
+        const account = 'test123@example.com';
+        const errors = null;
+        const errorMsg = '';
+        // Act
+        component.onChangeAccount(account, errors);
+        // Assert
+        expect(component.accountErrorMsg).toBe(errorMsg);
+      });
+
     });
 
-    it('should set the required error message into "accountErrorMsg" when account value is empty', () => {
-      // Arrange
-      const account = null;
-      const errors = {required: true};
-      const errorMsg = 'REQUIRED!';
-      // Act
-      component.onChangeAccount(account, errors);
-      // Assert
-      expect(component.accountErrorMsg).toBe(errorMsg);
-    });
+    describe('onChangePassword', () => {
 
-    it('should set the pattern error message into "accountErrorMsg" when account pattern is not correct', () => {
-      // Arrange
-      const account = 'test123';
-      const errors = {
-        pattern: {
-          actualValue: 'test123',
-          requiredPattern: '\\b[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,4}\\b',
-        },
-      };
-      const errorMsg = 'Pattern Error';
-      // Act
-      component.onChangeAccount(account, errors);
-      // Assert
-      expect(component.accountErrorMsg).toBe(errorMsg);
-    });
+      it('should set password value', () => {
+        // Arrange
+        const password = 'abcd12345';
+        const errors = null;
+        // Act
+        component.onChangePassword(password, errors);
+        // Assert
+        expect(component.password).toBe(password);
+      });
 
-    it('should set empty string error message into "accountErrorMsg" when account is correct', () => {
-      // Arrange
-      const account = 'test123@example.com';
-      const errors = null;
-      const errorMsg = '';
-      // Act
-      component.onChangeAccount(account, errors);
-      // Assert
-      expect(component.accountErrorMsg).toBe(errorMsg);
-    });
+      it('should set the required error message into "passwordErrorMsg" when password value is empty', () => {
+        // Arrange
+        const password = null;
+        const errors = {required: true};
+        const errorMsg = 'REQUIRED!';
+        // Act
+        component.onChangePassword(password, errors);
+        // Assert
+        expect(component.passwordErrorMsg).toBe(errorMsg);
+      });
 
+      it('should set the minlength error message into "passwordErrorMsg" when password length is less than 8', () => {
+        // Arrange
+        const password = 'test123';
+        const errors = {
+          minlength: {
+            actualLength: 7,
+            requiredLength: 8,
+          },
+        };
+        const errorMsg = 'Password length must greater then 8';
+        // Act
+        component.onChangePassword(password, errors);
+        // Assert
+        expect(component.passwordErrorMsg).toBe(errorMsg);
+      });
+
+      it('should set empty string error message into "passwordErrorMsg" when password is correct', () => {
+        // Arrange
+        const password = 'abcd12345';
+        const errors = null;
+        const errorMsg = '';
+        // Act
+        component.onChangePassword(password, errors);
+        // Assert
+        expect(component.passwordErrorMsg).toBe(errorMsg);
+      });
+
+    });
   });
 
-  describe('onChangePassword', () => {
-
-    it('should set password value', () => {
-      // Arrange
-      const password = 'abcd12345';
-      const errors = null;
-      // Act
-      component.onChangePassword(password, errors);
-      // Assert
-      expect(component.password).toBe(password);
-    });
-
-    it('should set the required error message into "passwordErrorMsg" when password value is empty', () => {
-      // Arrange
-      const password = null;
-      const errors = {required: true};
-      const errorMsg = 'REQUIRED!';
-      // Act
-      component.onChangePassword(password, errors);
-      // Assert
-      expect(component.passwordErrorMsg).toBe(errorMsg);
-    });
-
-    it('should set the minlength error message into "passwordErrorMsg" when password length is less than 8', () => {
-      // Arrange
-      const password = 'test123';
-      const errors = {
-        minlength: {
-          actualLength: 7,
-          requiredLength: 8,
-        },
-      };
-      const errorMsg = 'Password length must greater then 8';
-      // Act
-      component.onChangePassword(password, errors);
-      // Assert
-      expect(component.passwordErrorMsg).toBe(errorMsg);
-    });
-
-    it('should set empty string error message into "passwordErrorMsg" when password is correct', () => {
-      // Arrange
-      const password = 'abcd12345';
-      const errors = null;
-      const errorMsg = '';
-      // Act
-      component.onChangePassword(password, errors);
-      // Assert
-      expect(component.passwordErrorMsg).toBe(errorMsg);
-    });
-
+  describe('Template (Integration) testing', () => {
   });
 
 });
