@@ -151,6 +151,69 @@ describe('AppComponent', () => {
   });
 
   describe('Template (Integration) testing', () => {
+    let compiledComponent: HTMLElement;
+
+    beforeEach(() => {
+      // 讓 Angular 將畫面進行渲染
+      fixture.detectChanges();
+      // 取得渲染後的元素
+      compiledComponent = fixture.nativeElement;
+    });
+
+    describe('Account input field', () => {
+      let accountInputElement: HTMLInputElement;
+
+      beforeEach(() => {
+        // 拿到 account DOM 元素
+        accountInputElement = compiledComponent.querySelector('#account');
+      });
+
+      it('should have attribute "type", and the value is "email"', () => {
+        // Arrange
+        const attrName = 'type';
+        const attrValue = 'email';
+        // Assert
+        expect(accountInputElement.getAttribute(attrName)).toBe(attrValue);
+      });
+
+      it('should have attribute "name", and the value is "account"', () => {
+        const attrName = 'name';
+        const attrValue = 'account';
+        expect(accountInputElement.getAttribute(attrName)).toBe(attrValue);
+      });
+
+      it('should have attribute "pattern", and the value is "\\b[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,4}\\b"', () => {
+        const attrName = 'pattern';
+        const attrValue = '\\b[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,4}\\b';
+        expect(accountInputElement.getAttribute(attrName)).toBe(attrValue);
+      });
+
+      it('should have attribute "required"', () => {
+        const attrName = 'required';
+        expect(accountInputElement.hasAttribute(attrName)).toBeTrue();
+      });
+
+      it('should binding the value of property "account"', () => {
+        // Arrange
+        const account = 'everything';
+        // Action
+        component.account = account;
+        fixture.detectChanges();
+        // Assert
+        expect(accountInputElement.getAttribute('ng-reflect-model')).toBe(account);
+      });
+
+      it('should trigger function "onChangeAccount" when the value changed', () => {
+        // Arrange
+        spyOn(component, 'onChangeAccount');
+        // Action
+        accountInputElement.value = 'everything';
+        accountInputElement.dispatchEvent(new Event('ngModelChange'));
+        // Assert
+        expect(component.onChangeAccount).toHaveBeenCalled();
+      });
+
+    });
   });
 
 });
