@@ -276,6 +276,32 @@ describe('AppComponent', () => {
       });
 
     });
+
+    describe('Error message', () => {
+      it('should binding the value of property "accountErrorMsg" in the template', () => {
+        // Arrange
+        const errorMsg = 'Error Msg';
+        // 取得 html 元素
+        const targetElement = compiledComponent.querySelector('#account + .error-message');
+        // Action
+        // 設定 errorMsg 給 accountErrorMsg
+        component.accountErrorMsg = errorMsg;
+        // 觸發偵測資料異動
+        fixture.detectChanges();
+        // Assert
+        expect(targetElement?.textContent).toBe(errorMsg);
+      });
+
+      it('should binding the value of property "passwordErrorMsg" in the template', () => {
+        const errorMsg = 'Error Msg';
+        const targetElement = compiledComponent.querySelector('#password + .error-message');
+
+        component.passwordErrorMsg = errorMsg;
+        fixture.detectChanges();
+
+        expect(targetElement?.textContent).toBe(errorMsg);
+      });
+    });
   });
 
 });
