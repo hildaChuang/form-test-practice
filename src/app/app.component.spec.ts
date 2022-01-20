@@ -206,11 +206,13 @@ describe('AppComponent', () => {
       it('should trigger function "onChangeAccount" when the value changed', () => {
         // Arrange
         spyOn(component, 'onChangeAccount');
+        const accountNgModel = component.accountNgModelRef;
         // Action
         accountInputElement.value = 'everything';
         accountInputElement.dispatchEvent(new Event('ngModelChange'));
         // Assert
-        expect(component.onChangeAccount).toHaveBeenCalled();
+        // expect(component.onChangeAccount).toHaveBeenCalled();
+        expect(component.onChangeAccount).toHaveBeenCalledWith(accountNgModel.value, accountNgModel.errors);
       });
 
     });

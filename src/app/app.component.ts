@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ValidationErrors } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import { NgModel, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +7,8 @@ import { ValidationErrors } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @ViewChild('accountNgModel') accountNgModelRef: NgModel;
+
   title = 'form-test-practice';
 
   account = '';
