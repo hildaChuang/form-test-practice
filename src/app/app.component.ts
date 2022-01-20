@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NgModel, ValidationErrors } from '@angular/forms';
+import { NgForm, NgModel, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,7 @@ import { NgModel, ValidationErrors } from '@angular/forms';
 export class AppComponent {
   @ViewChild('accountNgModel') accountNgModelRef: NgModel;
   @ViewChild('passwordNgModel') passwordNgModelRef: NgModel;
+  @ViewChild('form') form: NgForm;
 
   title = 'form-test-practice';
 
@@ -16,6 +17,10 @@ export class AppComponent {
   password = '';
   accountErrorMsg = '';
   passwordErrorMsg = '';
+
+  onDebug(): void {
+    console.log('ngModel:', this.form);
+  }
 
   onChangeAccount(account: string, errors: ValidationErrors): void {
     this.account = account;
