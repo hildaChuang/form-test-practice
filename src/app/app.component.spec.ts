@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 /**
  * 測試集合 (Test suite)；作用域 (Scoping)
@@ -99,6 +99,65 @@ describe('AppComponent', () => {
         const message = component.getErrorMsg(formControl);
 
         expect(message).toBe(expectMsg);
+      });
+    });
+
+    describe('formGroup', () => {
+      it('should be undefined before initial', () => {
+        expect(component.form).toBeFalsy();
+      });
+
+      describe('after initial', () => {
+        beforeEach(() => {
+          fixture.detectChanges();
+        });
+
+        it('should be instance of FormGroup', () => {
+          expect(component.form).toBeInstanceOf(FormGroup);
+        });
+
+        it('should have two form controls', () => {
+          const formControls = component.form.controls;
+          const controlLength = Object.keys(formControls).length;
+
+          expect(controlLength).toBe(2);
+        });
+
+        describe('accountFormControl', () => {
+          it('should have the required validator', () => {
+            const error = component.accountCtrl.errors;
+            expect(error.required).toBeTrue();
+          });
+
+          it('should have the pattern validator', () => {
+            component.accountCtrl.setValue('abc');
+            const error = component.accountCtrl.errors;
+            const expectPattern = '/^\\b[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,4}\\b$/gi';
+
+            expect(error.pattern.requiredPattern).toBe(expectPattern);
+          });
+        });
+
+        describe('passwordFormControl', () => {
+          it('should have the required validator', () => {
+            const error = component.passwordCtrl.errors;
+            expect(error.required).toBeTrue();
+          });
+
+          it('should have the minlength validator', () => {
+            component.passwordCtrl.setValue('123');
+            const error = component.passwordCtrl.errors;
+
+            expect(error.minlength.requiredLength).toBe(8);
+          });
+
+          it('should have the maxlength validator', () => {
+            component.passwordCtrl.setValue('1234567890abcdefg');
+            const error = component.passwordCtrl.errors;
+
+            expect(error.maxlength.requiredLength).toBe(16);
+          });
+        });
       });
     });
   });

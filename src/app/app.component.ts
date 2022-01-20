@@ -22,10 +22,11 @@ export class AppComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
   ) {
-    this.initForm();
+    // this.initForm();
   }
 
   ngOnInit(): void {
+    this.initForm();
   }
 
   onLogin(): void {
@@ -60,7 +61,7 @@ export class AppComponent implements OnInit {
         null,
         [
           Validators.required,
-          Validators.maxLength(8),
+          Validators.minLength(8),
           Validators.maxLength(16),
         ]
       ]
