@@ -1,1 +1,75 @@
-<p>dynamic-form-by-ng-form works!</p>
+<form #form="ngForm" (ngSubmit)="onSubmit($event)">
+  <fieldset *ngFor="let employee of employees; let i = index; trackBy: trackByIndex">
+    <legend>Employee</legend>
+    <p>
+      <label for="{{'name-' + i}}">Name:</label>
+      <input type="text"
+             name="{{'name-' + i}}"
+             id="{{'name-' + i}}"
+             required
+             minlength="2"
+             maxlength="10"
+             #nameNgModel="ngModel"
+             [ngModel]="employee.name"
+             (ngModelChange)="onChangeName(nameNgModel.value, nameNgModel.errors, employee)"
+      />
+
+      <span class="error-message">{{employee.errorMsgForName}}</span>
+    </p>
+
+    <p>
+      Gender:
+      <input type="radio"
+             name="{{'gender-' + i}}"
+             id="{{'male-' + i}}"
+             value="male"
+             required
+             [(ngModel)]="employee.gender"
+      />
+      <label for="{{'male-' + i}}">Male</label>
+
+      <input type="radio"
+             name="{{'gender-' + i}}"
+             id="{{'female-' + i}}"
+             value="female"
+             required
+             [(ngModel)]="employee.gender"
+      />
+      <label for="{{'female-' + i}}">Female</label>
+    </p>
+
+    <p>
+      <label for="{{'age-' + i}}">Age:</label>
+      <select name="{{'age-' + i}}"
+              id="{{'age-' + i}}"
+              required
+              #ageNgModel="ngModel"
+              [ngModel]="employee.age"
+              (ngModelChange)="onChangeAge(ageNgModel.value, ageNgModel.errors, employee)"
+      >
+        <option value="">Select..</option>
+        <option value="18">18</option>
+        <option value="20">20</option>
+        <option value="40">40</option>
+        <option value="40">60</option>
+      </select>
+
+      <span class="error-message">{{employee.errorMsgForAge}}</span>
+    </p>
+
+    <p class="actions actions-right">
+      <button type="button" (click)="onDeleteEmployee(i)">Delete</button>
+    </p>
+
+  </fieldset>
+
+  <p class="actions actions-center">
+    <button type="button" (click)="onAddEmployee()">Add</button>
+    <button type="submit"
+            [disabled]="employees.length === 0 || form.invalid"
+    >
+      Submit
+    </button>
+    <button type="button" (click)="onDebug(form)">Debug</button>
+  </p>
+</form>
