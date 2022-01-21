@@ -44,6 +44,14 @@ export class DynamicFormByNgFormComponent implements OnInit {
     this.employees.splice(index, 1);
   }
 
+  /**
+   * @description Name changed
+   *
+   * @param name - target name
+   * @param errors - ngModel errors
+   * @param employee - target employee
+   * @memberOf DynamicFormByNgFormComponent
+   */
   onChangeName(
     name: string,
     errors: ValidationErrors | null,
@@ -53,6 +61,14 @@ export class DynamicFormByNgFormComponent implements OnInit {
     employee.errorMsgForName = this.getErrorMsg(errors);
   }
 
+  /**
+   * @description Age changed
+   *
+   * @param age - target age
+   * @param errors - ngModel errors
+   * @param employee - target employee
+   * @memberOf DynamicFormByNgFormComponent
+   */
   onChangeAge(
     age: number,
     errors: ValidationErrors | null,
@@ -66,7 +82,14 @@ export class DynamicFormByNgFormComponent implements OnInit {
     // do submit
   }
 
-  // 可以解決校能問題，DOM 只會繪製異動的部分
+  /**
+   * @description 根據索引來重新渲染有異動的節點，可以解決校能問題，DOM 只會繪製異動的部分
+   * ref. https://angular.tw/api/common/NgForOf
+   *
+   * @param index - index of data
+   * @return index - index
+   * @memberOf DynamicFormByNgFormComponent
+   */
   trackByIndex(index: number): number {
     return index;
   }
