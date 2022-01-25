@@ -1,1 +1,62 @@
-<p>dynamic-form-by-reactive-form works!</p>
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <ng-container formArrayName="employee"
+                *ngFor="let employer of employeeAry.controls; let i = index"
+  >
+    <fieldset [formGroupName]="i">
+      <legend>Employee</legend>
+      <p>
+        <label for="{{'name-' + i}}">Name</label>
+        <input type="text"
+               id="{{'name-' + i}}"
+               formControlName="name"
+        />
+
+        <span class="error-message">
+          {{ getErrorMsg('name', i) }}
+        </span>
+      </p>
+
+      <p>
+        Gender：
+        <input type="radio" id="{{'male-' + i}}" value="male" formControlName="gender"/>
+        <label for="{{'male-' + i}}">Male</label>
+        <input type="radio" id="{{'female-' + i}}" value="female" formControlName="gender"/>
+        <label for="{{'female-' + i}}">Female</label>
+
+        <span class="error-message">
+          {{ getErrorMsg('gender', i) }}
+        </span>
+      </p>
+
+      <p>
+        <label for="{{'age-' + i}}">Age</label>
+        <select id="{{'age-' + i}}" formControlName="age">
+          <option value="20">20</option>
+          <option value="40">40</option>
+          <option value="60">60</option>
+          <option value="80">80</option>
+        </select>
+
+        <span class="error-message">
+          {{ getErrorMsg('age', i) }}
+        </span>
+      </p>
+
+      <p class="actions actions-right">
+        <button type="button" (click)="onRemoveGroup(i)">
+          Remove
+        </button>
+      </p>
+    </fieldset>
+  </ng-container>
+
+  <p class="actions actions-center">
+    <button type="button" (click)="onAddGroup()">Add</button>
+    <button type="submit"
+            [disabled]="!isFormValid"
+    >
+      Submit
+    </button>
+    <button (click)="onDebug()">Debug</button>
+  </p>
+</form>
