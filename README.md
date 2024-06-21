@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.10.
 
+學習資源來自：[Angular 深入淺出三十天：表單與測試 系列](https://ithelp.ithome.com.tw/users/20090728/ironman/3881)
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
